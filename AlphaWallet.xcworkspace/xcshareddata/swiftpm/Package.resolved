@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "WalletConnect",
+        "repositoryURL": "https://github.com/WalletConnect/WalletConnectSwiftV2",
+        "state": {
+          "branch": null,
+          "revision": "784eafb6c40965addf6d4c0ddee70ad413de4c84",
+          "version": "0.4.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
