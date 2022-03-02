@@ -95,7 +95,9 @@ class AppCoordinator: NSObject, Coordinator {
         self.legacyFileBasedKeystore = try LegacyFileBasedKeystore(analyticsCoordinator: analyticsService)
 
         super.init()
-        window.rootViewController = navigationController
+        let story = UIStoryboard(name: "Wallet", bundle: nil)
+        let controller = story.instantiateViewController(withIdentifier: "LandingVC") as! LandingVC
+        window.rootViewController = controller
         window.makeKeyAndVisible()
 
         setupSplashViewController(on: navigationController)

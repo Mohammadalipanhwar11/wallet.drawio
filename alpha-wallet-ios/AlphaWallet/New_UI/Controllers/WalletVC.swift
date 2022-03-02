@@ -32,13 +32,14 @@ extension WalletVC:UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let noOfCellsInRow = 3   //number of column you want
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        let numberofItem: CGFloat = 3
-        let collectionViewWidth = self.collection.bounds.width
-        let extraSpace = (numberofItem - 1) * flowLayout.minimumInteritemSpacing
-        let inset = flowLayout.sectionInset.right + flowLayout.sectionInset.left
-        let width = Int((collectionViewWidth - extraSpace - inset) / numberofItem)
-        return CGSize(width: width, height: width)
+        let totalSpace = flowLayout.sectionInset.left
+                + flowLayout.sectionInset.right
+                + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
+
+        let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
+        return CGSize(width: size, height: size+30)
     }
     
     

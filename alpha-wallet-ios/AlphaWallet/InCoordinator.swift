@@ -117,6 +117,7 @@ class InCoordinator: NSObject, Coordinator {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isTranslucent = false
         tabBarController.delegate = self
+        tabBarController.tabBar.isHidden = true
 
         let tabBarAppearance = UITabBarAppearance()
         tabBarController.tabBar.tintColor = Colors.appTint

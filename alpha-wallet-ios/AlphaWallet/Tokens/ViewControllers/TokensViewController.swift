@@ -319,7 +319,14 @@ class TokensViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        collection.delegate = self
+        collection.dataSource = self
+        
+        let story = UIStoryboard(name: "Wallet", bundle: nil)
+        
+        collection.register(UINib(nibName: "WalletCoinCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "WalletCoinCollectionViewCell")
+        
+        
         navigationController?.applyTintAdjustment()
         hidesBottomBarWhenPushed = false
 
@@ -410,7 +417,39 @@ extension TokensViewController: StatefulViewController {
     }
 }
 
+extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let rowCount = viewModel.numberOfItems(for: section)
+        let mode = viewModel.sections[section]
+        if mode == .tokens || mode == .collectiblePairs {
+            handleTokensCountChange(rows: rowCount)
+        }
+        return rowCount
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collection.dequeueReusableCell(withReuseIdentifier: "WalletCoinCollectionViewCell", for: indexPath) as! WalletCoinCollectionViewCell
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+            let numberofItem: CGFloat = 3
+            let collectionViewWidth = self.collection.bounds.width
+            let extraSpace = (numberofItem - 1) * flowLayout.minimumInteritemSpacing
+            let inset = flowLayout.sectionInset.right + flowLayout.sectionInset.left
+            let width = Int((collectionViewWidth - extraSpace - inset) / numberofItem)
+            return CGSize(width: width, height: width)
+    }
+    
+    
+}
+
 extension TokensViewController: UITableViewDelegate {
+    
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
